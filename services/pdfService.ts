@@ -1,6 +1,6 @@
 
 import { PDFDocument } from 'pdf-lib';
-import { VoterData, Rect, LayoutType } from '../types';
+import { VoterData, Rect, LayoutType } from '../types.ts';
 
 // Fast Base64 to Uint8Array decoder
 const base64ToUint8Array = (base64: string) => {
@@ -36,14 +36,12 @@ export const generateAllSlips = async (
     for (let i = 0; i < voterCrops.length; i++) {
       const voter = voterCrops[i];
       
-      // Prevent browser lock-up during large PDF generation
       if (i % 15 === 0) await new Promise(r => setTimeout(r, 1));
 
       const page = mainPdf.addPage([originalW, originalH]);
       page.drawImage(letterImage, { x: 0, y: 0, width: originalW, height: originalH });
       
       const vBytes = base64ToUint8Array(voter.imageBlob);
-      // Voter images are now JPEGs for much faster embedding
       const vImg = await mainPdf.embedJpg(vBytes);
       
       page.drawImage(vImg, { 

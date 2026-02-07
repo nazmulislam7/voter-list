@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
-import { VoterExtractor } from './components/VoterExtractor';
-import { LetterMapper } from './components/LetterMapper';
-import { Header } from './components/Header';
-import { AppState, VoterData, Rect, LayoutType } from './types';
-import { generateAllSlips } from './services/pdfService';
+import { VoterExtractor } from './components/VoterExtractor.tsx';
+import { LetterMapper } from './components/LetterMapper.tsx';
+import { Header } from './components/Header.tsx';
+import { AppState, VoterData, Rect, LayoutType } from './types.ts';
+import { generateAllSlips } from './services/pdfService.ts';
 import { FileText, UserCheck, Download, CheckCircle } from 'lucide-react';
 
 const App: React.FC = () => {

@@ -5,7 +5,7 @@ import {
   Upload, Scissors, Loader2, Save, Trash2, ZoomIn, ZoomOut,
   Download as DownloadIcon, Import as ImportIcon
 } from 'lucide-react';
-import { VoterData, Rect } from '../types';
+import { VoterData, Rect } from '../types.ts';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs';
 
@@ -171,12 +171,11 @@ export const VoterExtractor: React.FC<Props> = ({ pdfFile, onUpload, onExtracted
     if (unitRects.length === 0) return;
     setLoading(true);
     const crops: VoterData[] = [];
-    // Scale 4.0 is approx 288 DPI - Perfect for text clarity
+    // Scale 4.0 for sharp text
     const exZoom = 4.0; 
     for (let p = 3; p <= totalPages; p++) {
       setStatus(`পাতা ${p} প্রসেস হচ্ছে...`);
       
-      // Micro-task yield for UI responsiveness
       await new Promise(resolve => setTimeout(resolve, 1));
 
       const page = await pdfRef.current.getPage(p);
@@ -216,7 +215,6 @@ export const VoterExtractor: React.FC<Props> = ({ pdfFile, onUpload, onExtracted
           cCan.width = r.width; cCan.height = r.height;
           const cCtx = cCan.getContext('2d')!;
           
-          // Enhancement: contrast filter to make black text more solid
           cCtx.filter = 'contrast(1.2) brightness(1.02)';
           cCtx.imageSmoothingEnabled = true;
           cCtx.imageSmoothingQuality = 'high';
@@ -225,7 +223,6 @@ export const VoterExtractor: React.FC<Props> = ({ pdfFile, onUpload, onExtracted
           cCtx.fillRect(0, 0, r.width, r.height);
           cCtx.drawImage(can, r.x, r.y, r.width, r.height, 0, 0, r.width, r.height);
           
-          // High Quality JPEG 95% for sharp, artifact-free text
           crops.push({ id: `v-${p}-${i}`, imageBlob: cCan.toDataURL('image/jpeg', 0.95), pageNumber: p });
         }
       }

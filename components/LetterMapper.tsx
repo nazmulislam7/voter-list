@@ -1,9 +1,8 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Upload, ArrowLeft, Loader2, Image as ImageIcon, LayoutGrid, FileText } from 'lucide-react';
-import { Rect, LayoutType } from '../types';
+import { Rect, LayoutType } from '../types.ts';
 
-// Permanent default mapping from user
 const DEFAULT_LETTER_MAPPING = {
   x: 14,
   y: 363,
