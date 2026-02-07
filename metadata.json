@@ -1,0 +1,5 @@
+{
+  "name": "Voter Slip Generator",
+  "description": "An automated tool to extract voter information from PDF lists and generate individual voter slips using a custom letter template, all processed locally in the browser.",
+  "requestFramePermissions": []
+}

@@ -1,0 +1,23 @@
+
+{
+  "name": "voter-slip-generator",
+  "version": "1.0.0",
+  "description": "Desktop version of Voter Slip Generator",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "author": "Nazmul Islam Rony",
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "pdf-lib": "^1.17.1",
+    "lucide-react": "^0.563.0"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3",
+    "vite": "^5.0.0"
+  }
+}
