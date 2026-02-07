@@ -171,11 +171,12 @@ export const VoterExtractor: React.FC<Props> = ({ pdfFile, onUpload, onExtracted
     if (unitRects.length === 0) return;
     setLoading(true);
     const crops: VoterData[] = [];
-    // Set to 4.0 (288 DPI) for excellent clarity while maintaining reasonable speed
+    // Scale 4.0 is approx 288 DPI - Perfect for text clarity
     const exZoom = 4.0; 
     for (let p = 3; p <= totalPages; p++) {
-      setStatus(`পাতা ${p} প্রসেস হচ্ছে... (Sharp Mode)`);
+      setStatus(`পাতা ${p} প্রসেস হচ্ছে...`);
       
+      // Micro-task yield for UI responsiveness
       await new Promise(resolve => setTimeout(resolve, 1));
 
       const page = await pdfRef.current.getPage(p);
@@ -215,8 +216,8 @@ export const VoterExtractor: React.FC<Props> = ({ pdfFile, onUpload, onExtracted
           cCan.width = r.width; cCan.height = r.height;
           const cCtx = cCan.getContext('2d')!;
           
-          // Enhancement Filter: Increase contrast and brightness slightly for sharp text
-          cCtx.filter = 'contrast(1.1) brightness(1.05)';
+          // Enhancement: contrast filter to make black text more solid
+          cCtx.filter = 'contrast(1.2) brightness(1.02)';
           cCtx.imageSmoothingEnabled = true;
           cCtx.imageSmoothingQuality = 'high';
           
@@ -224,7 +225,7 @@ export const VoterExtractor: React.FC<Props> = ({ pdfFile, onUpload, onExtracted
           cCtx.fillRect(0, 0, r.width, r.height);
           cCtx.drawImage(can, r.x, r.y, r.width, r.height, 0, 0, r.width, r.height);
           
-          // Use JPEG 95% for virtually artifact-free text extraction
+          // High Quality JPEG 95% for sharp, artifact-free text
           crops.push({ id: `v-${p}-${i}`, imageBlob: cCan.toDataURL('image/jpeg', 0.95), pageNumber: p });
         }
       }

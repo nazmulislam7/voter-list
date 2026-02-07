@@ -37,13 +37,13 @@ export const generateAllSlips = async (
       const voter = voterCrops[i];
       
       // Prevent browser lock-up during large PDF generation
-      if (i % 10 === 0) await new Promise(r => setTimeout(r, 1));
+      if (i % 15 === 0) await new Promise(r => setTimeout(r, 1));
 
       const page = mainPdf.addPage([originalW, originalH]);
       page.drawImage(letterImage, { x: 0, y: 0, width: originalW, height: originalH });
       
       const vBytes = base64ToUint8Array(voter.imageBlob);
-      // Voter images are now JPEGs for 5x faster processing
+      // Voter images are now JPEGs for much faster embedding
       const vImg = await mainPdf.embedJpg(vBytes);
       
       page.drawImage(vImg, { 
@@ -66,7 +66,7 @@ export const generateAllSlips = async (
     const sH = originalH * scale;
 
     for (let i = 0; i < voterCrops.length; i += 4) {
-      if (i % 8 === 0) await new Promise(r => setTimeout(r, 1));
+      if (i % 12 === 0) await new Promise(r => setTimeout(r, 1));
 
       const page = mainPdf.addPage([A4_W, A4_H]);
       const chunk = voterCrops.slice(i, i + 4);
